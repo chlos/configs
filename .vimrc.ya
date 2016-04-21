@@ -1,0 +1,17 @@
+" don't replace tabs and spaces
+set nolist
+" Highlight current line
+set cursorline
+
+""" folding """
+" set foldenable
+set nofoldenable
+set foldmethod=indent
+
+""" NerdTree """
+let NERDTreeIgnore=['\.pyc$']
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
+
+""" pymode settings """
+let g:pymode_indent = 1
