@@ -1,17 +1,138 @@
-" don't replace tabs and spaces
+" don't replace tabs and spaces with special charactres
 set nolist
+
 " Highlight current line
 set cursorline
 
 """ folding """
-" set foldenable
 set nofoldenable
 set foldmethod=indent
+
+""" autocmd """
+" Only do this part when compiled with support for autocommands
+if has("autocmd")
+    augroup redhat
+    autocmd!
+    " When editing a file, always jump to the last cursor position
+    autocmd BufReadPost *
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
+    augroup END
+endif
+
+""" Python """
+" Smart indents in .py files
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+
+" highlight too long lines
+autocmd BufRead * set colorcolumn=80
+hi ColorColumn ctermbg=8
+
+" Switch off .swp and ~ (backup) files
+set nobackup
+set noswapfile
+"
+"My abbrs
+abbr loginfo logging.info('%s' % ())
+abbr logdebug logging.debug('%s' % ())
+abbr logerror logging.error('%s' % ())
+
+
+"""""""""""""""
+""" Plugins """
+"""""""""""""""
+
+""" airline """
+let g:ya_vim#use_plugin#airline = "yes"
+let g:ya_vim#use_plugin#airline#settings = "yes"
+
+""" ctrlp """
+let g:ya_vim#use_plugin#ctrlp = "yes"
+let g:ya_vim#use_plugin#ctrlp#settings = "yes"
+
+""" delimitMate """
+let g:ya_vim#use_plugin#delimitMate = "yes"
+let g:ya_vim#use_plugin#delimitMate#settings = "yes"
+
+""" easymotion """
+let g:ya_vim#use_plugin#easymotion = "yes"
+let g:ya_vim#use_plugin#easymotion#settings = "yes"
+
+""" fswitch """
+let g:ya_vim#use_plugin#fswitch = "yes"
+let g:ya_vim#use_plugin#fswitch#settings = "yes"
+
+""" incsearch_vim """
+let g:ya_vim#use_plugin#incsearch_easymotion_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_easymotion_vim#settings = "yes"
+let g:ya_vim#use_plugin#incsearch_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_vim#settings = "yes"
+
+""" indentLine """
+let g:ya_vim#use_plugin#indentLine = "yes"
+let g:ya_vim#use_plugin#indentLine#settings = "yes"
+
+""" NerdCommenter """
+let g:ya_vim#use_plugin#nerdcommenter = "yes"
+let g:ya_vim#use_plugin#nerdcommenter#settings = "yes"
 
 """ NerdTree """
 let NERDTreeIgnore=['\.pyc$']
 let g:NERDTreeDirArrowExpandable = '►'
 let g:NERDTreeDirArrowCollapsible = '▼'
 
-""" pymode settings """
+""" plugin_viewdoc """
+let g:ya_vim#use_plugin#plugin_viewdoc = "yes"
+let g:ya_vim#use_plugin#plugin_viewdoc#settings = "yes"
+
+""" pyclewn """
+let g:ya_vim#use_plugin#pyclewn = "yes"
+let g:ya_vim#use_plugin#pyclewn#settings = "yes"
+
+""" pymode """
+let g:ya_vim#use_plugin#python_mode = "yes"
+let g:ya_vim#use_plugin#python_mode#settings = "yes"
+" indents
 let g:pymode_indent = 1
+" rope
+let g:pymode_rope = 1
+" common
+let g:pymode_trim_whitespaces = 1   " Trim unused white spaces on save
+" code checking
+" Don't check code on every save (if file has been modified)
+"let g:pymode_lint_on_write = 0
+let g:pymode_lint_sort = ['E', 'C', 'I']
+
+""" signify """
+let g:ya_vim#use_plugin#signify = "yes"
+let g:ya_vim#use_plugin#signify#settings = "yes"
+
+""" snippets """
+let g:ya_vim#use_plugin#snippets = "yes"
+let g:ya_vim#use_plugin#snippets#settings = "yes"
+
+""" spacehi """
+let g:ya_vim#use_plugin#spacehi = "yes"
+let g:ya_vim#use_plugin#spacehi#settings = "yes"
+
+""" startify """
+let g:ya_vim#use_plugin#startify = "yes"
+let g:ya_vim#use_plugin#startify#settings = "yes"
+
+""" tagbar """
+let g:ya_vim#use_plugin#tagbar = "yes"
+let g:ya_vim#use_plugin#tagbar#settings = "yes"
+" close tagbar folds by default
+"let g:tagbar_foldlevel = 0
+let g:tagbar_width=35
+" tagbar shows tags in order of they created in file
+let g:tagbar_sort = 0
+
+""" ultisnips """
+let g:ya_vim#use_plugin#ultisnips = "yes"
+let g:ya_vim#use_plugin#ultisnips#settings = "yes"
+
+""" vcscommand """
+let g:ya_vim#use_plugin#vcscommand = "yes"
+let g:ya_vim#use_plugin#vcscommand#settings = "yes"
