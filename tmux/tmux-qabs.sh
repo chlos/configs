@@ -18,6 +18,10 @@ tmux new-window -n simulproxy -t 03-simulproxy:2 -c ~/svn/qabs-simulproxy-conf/ 
 tmux new-session -s 04-bsengine -d
 tmux new-window -n bsengine -t 04-bsengine:1 'ssh raccoon@bsengine01i.yabs.yandex.ru -A'
 
+tmux new-session -s duty-sandbox -d
+
+tmux new-session -s duty-bamboo -d
+
 tmux new-session -s smoke -d
 
 tmux new-session -s stage -d
