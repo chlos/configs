@@ -103,5 +103,7 @@ fi
 export SVN_EDITOR=vim
 
 # ya related
-# alias ya='~/svn-arcadia/mini_arcadia/devtools/ya/ya'
+#export PATH=$PATH:$HOME/arcadia/devtools/ya
 export PATH=$PATH:$HOME/mini_arcadia/devtools/ya
+alias vim='ya vim'
+alias vi='ya vim'
