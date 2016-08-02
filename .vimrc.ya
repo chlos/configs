@@ -1,5 +1,5 @@
 " don't replace tabs and spaces with special charactres
-set nolist
+set listchars=tab:»·,trail:·,precedes:<,extends:>
 
 " Highlight current line
 set cursorline
@@ -8,23 +8,6 @@ set cursorline
 set nofoldenable
 set foldmethod=indent
 
-""" autocmd """
-" Only do this part when compiled with support for autocommands
-if has("autocmd")
-    augroup redhat
-    autocmd!
-    " When editing a file, always jump to the last cursor position
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
-    augroup END
-endif
-
-""" Python """
-" Smart indents in .py files
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-
 " highlight too long lines
 autocmd BufRead * set colorcolumn=80
 hi ColorColumn ctermbg=8
@@ -32,11 +15,34 @@ hi ColorColumn ctermbg=8
 " Switch off .swp and ~ (backup) files
 set nobackup
 set noswapfile
-"
-"My abbrs
+
+" My abbrs
 abbr loginfo logging.info('%s' % ())
 abbr logdebug logging.debug('%s' % ())
 abbr logerror logging.error('%s' % ())
+
+" When editing a file, always jump to the last cursor position
+augroup lastCurPos
+    autocmd!
+    autocmd BufReadPost *
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
+augroup END
+
+" auto shebang
+augroup Shebang
+    autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl>\"|$
+augroup END
+
+
+"""""""""""""""
+""" Mappings"""
+"""""""""""""""
+
+" buffers navigation
+map gB :bprevious<CR>
+map gb :bnext<CR>
 
 
 """""""""""""""
@@ -46,10 +52,12 @@ abbr logerror logging.error('%s' % ())
 """ airline """
 let g:ya_vim#use_plugin#airline = "yes"
 let g:ya_vim#use_plugin#airline#settings = "yes"
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 """ ctrlp """
 let g:ya_vim#use_plugin#ctrlp = "yes"
 let g:ya_vim#use_plugin#ctrlp#settings = "yes"
+let g:ctrlp_root_markers = ['.arcadia.root', '.ycm_extra_conf.py', '.ctrlp-marker']
 
 """ delimitMate """
 let g:ya_vim#use_plugin#delimitMate = "yes"
@@ -68,6 +76,8 @@ let g:ya_vim#use_plugin#incsearch_easymotion_vim = "yes"
 let g:ya_vim#use_plugin#incsearch_easymotion_vim#settings = "yes"
 let g:ya_vim#use_plugin#incsearch_vim = "yes"
 let g:ya_vim#use_plugin#incsearch_vim#settings = "yes"
+let g:ya_vim#use_plugin#incsearch_fuzzy_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_fuzzy_vim#settings = "yes"
 
 """ indentLine """
 let g:ya_vim#use_plugin#indentLine = "yes"
@@ -103,6 +113,8 @@ let g:pymode_trim_whitespaces = 1   " Trim unused white spaces on save
 " Don't check code on every save (if file has been modified)
 "let g:pymode_lint_on_write = 0
 let g:pymode_lint_sort = ['E', 'C', 'I']
+" ignore some pep8 warnings
+let g:pymode_lint_ignore="E116,W503"
 
 """ signify """
 let g:ya_vim#use_plugin#signify = "yes"
@@ -115,6 +127,8 @@ let g:ya_vim#use_plugin#snippets#settings = "yes"
 """ spacehi """
 let g:ya_vim#use_plugin#spacehi = "yes"
 let g:ya_vim#use_plugin#spacehi#settings = "yes"
+autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,InsertLeave * SpaceHi
+autocmd InsertEnter * NoSpaceHi
 
 """ startify """
 let g:ya_vim#use_plugin#startify = "yes"
@@ -136,3 +150,7 @@ let g:ya_vim#use_plugin#ultisnips#settings = "yes"
 """ vcscommand """
 let g:ya_vim#use_plugin#vcscommand = "yes"
 let g:ya_vim#use_plugin#vcscommand#settings = "yes"
+"
+""" vim-surround """
+let g:ya_vim#use_plugin#vim_surround = "yes"
+let g:ya_vim#use_plugin#vim_surround#settings = "yes"
