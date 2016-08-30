@@ -102,9 +102,12 @@ fi
 
 # exports
 export SVN_EDITOR=vim
+export EDITOR=vim
 
 # ya related
 #export PATH=$PATH:$HOME/arcadia/devtools/ya
 export PATH=$PATH:$HOME/mini_arcadia/devtools/ya
 alias vim='ya vim'
-alias vi='ya vim'
+#alias vi='ya vim'
+
+source /home/raccoon/.yql/shell_completion
