@@ -1,0 +1,183 @@
+" don't replace tabs and spaces with special charactres
+set listchars=tab:»·,trail:·,precedes:<,extends:>
+" use this in case of problems with locale and fancy symbols like '»'
+"set listchars=tab:>.,trail:.,precedes:<,extends:>
+
+" don't expand tabs to spaces in C/C++ files (because of yabs styleguide)
+"autocmd BufRead,BufNewFile *.c,*.cpp,*.h set noexpandtab
+"autocmd BufRead,BufNewFile *.py set expandtab
+
+" Highlight current line
+set cursorline
+
+""" folding """
+set nofoldenable
+set foldmethod=indent
+
+" highlight too long lines
+"autocmd BufRead * set colorcolumn=80
+autocmd BufRead * set colorcolumn=119
+hi ColorColumn ctermbg=8
+
+" Switch off .swp and ~ (backup) files
+set nobackup
+set noswapfile
+
+" My abbrs
+abbr loginfo logging.info('%s' % ())
+abbr logdebug logging.debug('%s' % ())
+abbr logerror logging.error('%s' % ())
+abbr pdbst import pdb; pdb.set_trace()  # FIXME
+
+" auto shebang
+augroup Shebang
+    autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl>\"|$
+augroup END
+
+" smart wrapping
+set wrap
+set breakindent
+
+" splits tuning
+set splitbelow
+set splitright
+
+
+"""""""""""""""
+""" Mappings"""
+"""""""""""""""
+
+" buffers navigation
+map gB :bprevious<CR>
+map gb :bnext<CR>
+
+" splits navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" bind bash cmd on F1
+" map <F2> :!sh -xc 'echo HELLO'
+
+
+"""""""""""""""
+""" Plugins """
+"""""""""""""""
+
+""" airline """
+let g:ya_vim#use_plugin#airline = "yes"
+let g:ya_vim#use_plugin#airline#settings = "yes"
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+""" ctrlp """
+let g:ya_vim#use_plugin#ctrlp = "yes"
+let g:ya_vim#use_plugin#ctrlp#settings = "yes"
+let g:ctrlp_root_markers = ['.arcadia.root', '.ycm_extra_conf.py', '.ctrlp-marker']
+
+""" delimitMate """
+let g:ya_vim#use_plugin#delimitMate = "yes"
+let g:ya_vim#use_plugin#delimitMate#settings = "yes"
+
+""" easymotion """
+let g:ya_vim#use_plugin#easymotion = "yes"
+let g:ya_vim#use_plugin#easymotion#settings = "yes"
+
+""" fswitch """
+let g:ya_vim#use_plugin#fswitch = "yes"
+let g:ya_vim#use_plugin#fswitch#settings = "yes"
+
+""" incsearch_vim """
+let g:ya_vim#use_plugin#incsearch_easymotion_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_easymotion_vim#settings = "yes"
+let g:ya_vim#use_plugin#incsearch_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_vim#settings = "yes"
+let g:ya_vim#use_plugin#incsearch_fuzzy_vim = "yes"
+let g:ya_vim#use_plugin#incsearch_fuzzy_vim#settings = "yes"
+
+""" indentLine """
+let g:ya_vim#use_plugin#indentLine = "yes"
+let g:ya_vim#use_plugin#indentLine#settings = "yes"
+
+""" NerdCommenter """
+let g:ya_vim#use_plugin#nerdcommenter = "yes"
+let g:ya_vim#use_plugin#nerdcommenter#settings = "yes"
+
+""" NerdTree """
+let NERDTreeIgnore=['\.pyc$']
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
+"let g:NERDTreeDirArrowExpandable = ">"
+"let g:NERDTreeDirArrowCollapsible = "v"
+
+""" plugin_viewdoc """
+let g:ya_vim#use_plugin#plugin_viewdoc = "yes"
+let g:ya_vim#use_plugin#plugin_viewdoc#settings = "yes"
+
+""" pyclewn """
+let g:ya_vim#use_plugin#pyclewn = "yes"
+let g:ya_vim#use_plugin#pyclewn#settings = "yes"
+
+""" pymode """
+let g:ya_vim#use_plugin#python_mode = "yes"
+let g:ya_vim#use_plugin#python_mode#settings = "yes"
+" indents
+let g:pymode_indent = 1
+" rope
+let g:pymode_rope = 1
+" common
+let g:pymode_trim_whitespaces = 1   " Trim unused white spaces on save
+" code checking
+" Don't check code on every save (if file has been modified)
+"let g:pymode_lint_on_write = 0
+let g:pymode_lint_sort = ['E', 'C', 'I']
+" ignore some pep8 warnings
+let g:pymode_lint_ignore="E116,W503,C901,E731"
+
+""" save_cursor_pos """
+let g:ya_vim#use_plugin#save_cursor_pos = "yes"
+let g:ya_vim#use_plugin#save_cursor_pos#settings = "yes"
+
+""" signify """
+let g:ya_vim#use_plugin#signify = "yes"
+let g:ya_vim#use_plugin#signify#settings = "yes"
+
+""" snippets """
+let g:ya_vim#use_plugin#snippets = "yes"
+let g:ya_vim#use_plugin#snippets#settings = "yes"
+
+""" spacehi """
+let g:ya_vim#use_plugin#spacehi = "yes"
+let g:ya_vim#use_plugin#spacehi#settings = "yes"
+"autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,InsertLeave * SpaceHi
+"autocmd InsertEnter,InsertLeave * NoSpaceHi
+
+""" startify """
+let g:ya_vim#use_plugin#startify = "yes"
+let g:ya_vim#use_plugin#startify#settings = "yes"
+
+""" tagbar """
+let g:ya_vim#use_plugin#tagbar = "yes"
+let g:ya_vim#use_plugin#tagbar#settings = "yes"
+" close tagbar folds by default
+"let g:tagbar_foldlevel = 0
+let g:tagbar_width=35
+" tagbar shows tags in order of they created in file
+let g:tagbar_sort = 0
+
+""" ultisnips """
+let g:ya_vim#use_plugin#ultisnips = "yes"
+let g:ya_vim#use_plugin#ultisnips#settings = "yes"
+
+""" vcscommand """
+let g:ya_vim#use_plugin#vcscommand = "yes"
+let g:ya_vim#use_plugin#vcscommand#settings = "yes"
+let g:VCSCommandSVNExec = "svn"
+
+""" vim-surround """
+let g:ya_vim#use_plugin#vim_surround = "yes"
+let g:ya_vim#use_plugin#vim_surround#settings = "yes"
+
+""" vim-obsession """
+let g:ya_vim#use_plugin#vim_obsession = "yes"
+let g:ya_vim#use_plugin#vim_obsession#settings = "yes"
