@@ -39,19 +39,24 @@ color_prompt=yes
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+#if [ -n "$force_color_prompt" ]; then
+    #if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	## We have color support; assume it's compliant with Ecma-48
+	## (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	## a case would tend to support setf rather than setaf.)
+	#color_prompt=yes
+    #else
+	#color_prompt=
+    #fi
+#fi
+
+# https://github.com/jimeh/git-aware-prompt
+# https://github.yandex-team.ru/thelamon/git-aware-prompt
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source "${GITAWAREPROMPT}/main.sh"
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\n\[\e[0;37m\][$(date +"%Y-%m-%d %H:%M:%S")] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \n\[\e[1;37m\]$\[\e[0;37m\] '
+    PS1='\n\[\e[1;37m\][$(date +"%Y-%m-%d %H:%M:%S")] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \[$txtcyn\]$git_branch\[$txtred\]$git_dirty\[$txtrst\]\n\[\e[1;37m\]$\[\e[0;37m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -74,10 +79,12 @@ if [ -x /usr/bin/dircolors ]; then
     #alias vdir='vdir --color=auto'
 
     #alias grep='grep --color=auto'
-    alias grep='ack-grep'
+    #alias grep='ack-grep --ignore-dir=".ropeproject"'
+    alias grep='ag --ignore-dir=".ropeproject"'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -104,10 +111,18 @@ fi
 export SVN_EDITOR=vim
 export EDITOR=vim
 
-# ya related
-#export PATH=$PATH:$HOME/arcadia/devtools/ya
-export PATH=$PATH:$HOME/mini_arcadia/devtools/ya
-alias vim='ya vim'
-#alias vi='ya vim'
+# ssh keys stuff
+if [[ -S "$SSH_AUTH_SOCK" && ! -h "$SSH_AUTH_SOCK" ]]; then
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock;
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock;
 
-source /home/raccoon/.yql/shell_completion
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# utf
+export LANGUAGE="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# stderr color
+color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
